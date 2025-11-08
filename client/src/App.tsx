@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import Signup from "./pages/signup";
 import Allocation from "./pages/Allocation";
 import Designers from "./pages/Designers";
 import CaseUploader from "./pages/CaseUploader";
@@ -11,7 +10,6 @@ const App = () => {
       {/* Route Definitions */}
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/allocation" element={<Allocation />} />
         <Route path="/designers" element={<Designers />} />
         <Route path="/upload" element={<CaseUploader />} />

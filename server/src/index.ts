@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import fetch from "node-fetch"; // if using Node < 18
 import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
 // File Checker
 import { splitCasesByLabToken } from "./FileChecker/checkerUtils/mainChecker.js";
@@ -10,6 +11,7 @@ import { handleApiError } from "./FileChecker/utils/errorHandlers.js";
 // Case Uploader
 import watchLocalRoutes from "./CaseUploader/routes/watchLocal.js";
 import uploadRoutes from "./CaseUploader/routes/uploadFile.js";
+import authRoutes from "./Allocation/routes/authRoutes.js";
 import { getClient } from "./CaseUploader/config/box.js";
 import { processCases } from "./CaseUploader/utils/downloader/ts_portal_box_cases_downloader.js";
 import { sequelize } from "./Allocation/config/database.js";
@@ -25,6 +27,8 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 5000;
 
+app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -32,7 +36,6 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
 
 // Case Uploader
 // getClient((client) => {
