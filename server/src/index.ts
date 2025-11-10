@@ -27,8 +27,6 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 5000;
 
-app.use(express.json());
-app.use(cookieParser());
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -36,21 +34,23 @@ app.use(
     credentials: true,
   })
 );
+app.use(express.json());
+app.use(cookieParser());
 
 // Case Uploader
-// getClient((client) => {
-//   processCases(client);
-// });
+getClient((client) => {
+  processCases(client);
+});
 
-// // Run every 1 minute
-// setInterval(() => {
-//   getClient((client) => {
-//     processCases(client);
-//   });
-// }, 60 * 1000);
+// Run every 1 minute
+setInterval(() => {
+  getClient((client) => {
+    processCases(client);
+  });
+}, 60 * 1000);
 
 // Then your routes
-app.use("/api", watchLocalRoutes, uploadRoutes);
+app.use("/api", watchLocalRoutes, uploadRoutes,authRoutes);
 
 // File checker
 // local test

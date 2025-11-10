@@ -19,6 +19,7 @@
     "lint": "npm run lint --workspaces"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.9",
     "@types/express": "^4.17.25",
     "@types/express-session": "^1.18.2",
@@ -40,6 +41,7 @@
   "type": "module",
   "dependencies": {
     "axios": "^1.10.0",
+    "bcrypt": "^6.0.0",
     "box-node-sdk": "^3.8.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",

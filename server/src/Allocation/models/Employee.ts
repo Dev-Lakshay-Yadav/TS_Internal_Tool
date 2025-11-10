@@ -35,7 +35,7 @@ Employee.init(
       allowNull: false,
     },
     password: {
-      type: DataTypes.STRING(16),
+      type: DataTypes.STRING(),
       allowNull: false,
       unique: true,
     },

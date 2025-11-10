@@ -3,7 +3,10 @@ import unzipper from "unzipper";
 import axios from "axios";
 import qs from "qs";
 import xml_to_json from "xml-js";
-import { getCurrentTimeString } from "./ts_datetime.js";
+import {
+  getCreationTimeDateString,
+  getCurrentTimeString,
+} from "./ts_datetime.js";
 import {
   INCOMING_CASES_QUERY,
   CONSTANTS_POST_ENDPOINT,
@@ -19,6 +22,7 @@ import { generateCasePDF } from "./ts_case_details_pdf.js";
 import { processRedesigns } from "./ts_portal_redesigns_downloader.js";
 import { getClient } from "../../config/box.js";
 import path from "path";
+import { getLiveCases2 } from "../watchLogic.js";
 
 // -------------------- Interfaces --------------------
 
@@ -227,10 +231,22 @@ export function processCaseImpl(
               JSON.parse(caseDetails.details_json),
               getFilePath(caseId, "CaseDetails.pdf", "IMPORT")
             );
+            const timestamp = Date.now();
+            const formatted = getCreationTimeDateString(timestamp);
+
+            const token = caseId.slice(0, 2);
+
+              // console.log(`${process.env.ROOT_FOLDER}/${formatted}/${token}/EXPORT - External/${caseId}`)
+
+            const data = getLiveCases2(
+              `${process.env.ROOT_FOLDER}/${formatted}/${token}/EXPORT - External/${caseId}`
+            );
+            console.log(data,' #@#@#@#@#@#@#          asd                  @#@#@#@#@#@#@#@#')
 
             // send API update (re-added from old function)
             const toLog = {
               case_id: caseId,
+              DateFolder: formatted,
               case_file: "Unzipping paused",
               queue_status: "Needs prep work",
               current_allocation: "None",

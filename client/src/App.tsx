@@ -1,8 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import Allocation from "./pages/Allocation";
-import Designers from "./pages/Designers";
+import Allocation from "./pages/AllocationPage";
+import Designers from "./pages/DesignersPage";
 import CaseUploader from "./pages/CaseUploader";
+import Register from "./pages/Register";
+
+import DashboardLayout from "./components/Allocation-dashboard/layout";
 
 const App = () => {
   return (
@@ -10,8 +13,12 @@ const App = () => {
       {/* Route Definitions */}
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/allocation" element={<Allocation />} />
-        <Route path="/designers" element={<Designers />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/auth" element={<DashboardLayout />}>
+          <Route path="allocation" element={<Allocation />} />
+          <Route path="designers" element={<Designers />} />
+        </Route>
         <Route path="/upload" element={<CaseUploader />} />
         {/* 404 fallback */}
         <Route path="*" element={<h2>404 - Page Not Found</h2>} />
@@ -21,24 +28,6 @@ const App = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // UI for caseUploader
 
@@ -191,14 +180,3 @@ export default App;
 // };
 
 // export default App;
-
-
-
-
-
-
-
-
-
-
-

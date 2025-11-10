@@ -1,53 +1,57 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { loginUser, resetAuthState } from "../store/auth/authSlice";
-import type { RootState } from "../store/store";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../store/hooks"; // adjust import path
+import { registerUser, resetAuthState } from "../store/auth/authSlice"; // adjust path to your slice
+import type { RootState } from "../store/store"; // adjust path if needed
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Register = () => {
+  const [form, setForm] = useState({
+    email: "",
+    emp_name: "",
+    password: "",
+  });
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const { user, loading, error, accessToken } = useAppSelector(
+  const { loading, error, user } = useAppSelector(
     (state: RootState) => state.auth
   );
 
-  // Handle login submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    dispatch(loginUser({ email, password }));
+  // Handle field input
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Redirect after successful login
-  useEffect(() => {
-    if (user && accessToken) {
-      navigate("/auth/allocation"); // redirect to your protected route
-    }
-  }, [user, accessToken, navigate]);
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(registerUser(form));
+  };
 
-  // Cleanup errors when leaving page
+  // Redirect on successful registration
   useEffect(() => {
-    return () => {
+    if (user) {
+      navigate("/"); // redirect to login or dashboard
       dispatch(resetAuthState());
-    };
-  }, [dispatch]);
+    }
+  }, [user, navigate, dispatch]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 relative overflow-hidden">
-      {/* Animated gradient blobs */}
+      {/* Background gradient blobs */}
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-blue-600/40 rounded-full blur-3xl animate-pulse"></div>
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-purple-600/30 rounded-full blur-3xl animate-pulse"></div>
 
-      {/* Login Card */}
+      {/* Register Card */}
       <div className="relative w-full max-w-sm bg-white/5 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/10 p-8">
         <div className="text-center mb-6">
           <h1 className="text-3xl font-semibold text-white tracking-tight">
-            Welcome Back
+            Create Account
           </h1>
           <p className="text-gray-400 text-sm mt-2">
-            Enter your email and passkey to continue
+            Register to access your employee dashboard
           </p>
         </div>
 
@@ -63,14 +67,37 @@ const Login = () => {
             <input
               type="email"
               id="email"
+              name="email"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={form.email}
+              onChange={handleChange}
               className="w-full px-4 py-3 rounded-lg bg-gray-800/70 text-white placeholder-gray-400 
                          border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent
                          outline-none transition-all duration-200"
               placeholder="Enter your email"
-              autoComplete="email"
+              autoComplete="off"
+            />
+          </div>
+
+          {/* Employee Name */}
+          <div>
+            <label
+              htmlFor="emp_name"
+              className="text-md text-gray-300 mb-2 block font-medium"
+            >
+              Employee Name
+            </label>
+            <input
+              type="text"
+              id="emp_name"
+              name="emp_name"
+              required
+              value={form.emp_name}
+              onChange={handleChange}
+              className="w-full px-4 py-3 rounded-lg bg-gray-800/70 text-white placeholder-gray-400 
+                         border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                         outline-none transition-all duration-200"
+              placeholder="Enter your full name"
             />
           </div>
 
@@ -80,23 +107,24 @@ const Login = () => {
               htmlFor="password"
               className="text-md text-gray-300 mb-2 block font-medium"
             >
-              Passkey
+              Password
             </label>
             <input
               type="password"
               id="password"
+              name="password"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={form.password}
+              onChange={handleChange}
               className="w-full px-4 py-3 rounded-lg bg-gray-800/70 text-white placeholder-gray-400 
                          border border-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent
                          outline-none transition-all duration-200"
-              placeholder="Enter your passkey"
-              autoComplete="current-password"
+              placeholder="Create a strong password"
+              autoComplete="new-password"
             />
           </div>
 
-          {/* Submit */}
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
@@ -104,28 +132,24 @@ const Login = () => {
                        hover:from-blue-500 hover:to-blue-400 font-semibold text-white tracking-wide 
                        shadow-lg hover:shadow-blue-500/25 transition-all duration-300 disabled:opacity-60"
           >
-            {loading ? "Verifying..." : "Login"}
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
 
-        {/* Error */}
+        {/* Error Message */}
         {error && (
           <p className="text-red-400 text-sm text-center mt-4">{error}</p>
         )}
 
-        {/* Footer */}
-        <div className="mt-6 text-center space-y-2">
+        <div className="mt-6 text-center">
           <p className="text-sm text-gray-500 tracking-wide">
-            🔒 Authorized access only
-          </p>
-          <p className="text-sm text-gray-400">
-            Don’t have an account?{" "}
-            <Link
-              to="/register"
-              className="text-blue-400 hover:text-blue-300 font-medium transition-colors duration-200"
+            Already have an account?{" "}
+            <span
+              onClick={() => navigate("/")}
+              className="text-blue-400 hover:text-blue-300 cursor-pointer"
             >
-              Register here
-            </Link>
+              Login here
+            </span>
           </p>
         </div>
       </div>
@@ -133,4 +157,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

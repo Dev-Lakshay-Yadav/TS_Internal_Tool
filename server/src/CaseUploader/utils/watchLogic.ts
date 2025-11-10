@@ -211,3 +211,37 @@ export const getRedesignCases = (basePath: string) => {
 
   return result;
 };
+
+
+
+
+
+
+
+
+
+
+
+const LIVE_REGEX2 = /^(.+?)\s*--\s*(.+)$/;
+
+export const getLiveCases2 = (basePath: string) => {
+  if (!fs.existsSync(basePath)) {
+    throw new Error(`Base path not found: ${basePath}`);
+  }
+
+  const entries = fs.readdirSync(basePath, { withFileTypes: true });
+
+  const patients: string[] = [];
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) continue;
+
+    const match = entry.name.match(LIVE_REGEX2);
+    if (!match) continue;
+
+    const [, , patientName] = match;
+    patients.push(patientName.trim());
+  }
+
+  return patients.join(", ");
+};

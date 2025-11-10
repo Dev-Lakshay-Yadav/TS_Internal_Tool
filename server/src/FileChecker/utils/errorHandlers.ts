@@ -61,8 +61,6 @@ export const handleApiBadRequest = (
   });
 };
 
-
-
 //   403 - Forbidden
 export const handleForbidden = (
   res: Response,
