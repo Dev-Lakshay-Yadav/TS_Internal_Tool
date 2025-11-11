@@ -4,6 +4,7 @@ import {
   Efficiency_Creation_Attributes,
 } from "../types/Efficiency_Types.js";
 import { sequelize } from "../config/database.js";
+import Employee from "./Employee.js";
 
 export class Efficiency
   extends Model<Efficiency_Attributes, Efficiency_Creation_Attributes>
@@ -11,11 +12,12 @@ export class Efficiency
 {
   declare id: number;
   declare emp_id: number;
-  declare lab: string;
-  declare case_id: string;
-  declare units_allocated: string;
-  declare units_completed: string;
-  declare month: string;
+  declare month_year: string;
+  declare total_units_allocated: number;
+  declare total_units_completed: number;
+  declare total_time_spent: number;
+  declare created_at: Date;
+  declare updated_at: Date;
 }
 
 Efficiency.init(
@@ -29,25 +31,31 @@ Efficiency.init(
       type: DataTypes.BIGINT.UNSIGNED,
       allowNull: false,
     },
-    lab: {
+    month_year: {
       type: DataTypes.STRING(8),
       allowNull: false,
     },
-    case_id: {
-      type: DataTypes.STRING(16),
+    total_units_allocated: {
+      type: DataTypes.BIGINT.UNSIGNED,
       allowNull: false,
     },
-    units_allocated: {
-      type: DataTypes.STRING(16),
+    total_units_completed: {
+      type: DataTypes.BIGINT.UNSIGNED,
       allowNull: false,
     },
-    units_completed: {
-      type: DataTypes.STRING(16),
+    total_time_spent: {
+      type: DataTypes.BIGINT.UNSIGNED,
       allowNull: false,
     },
-    month: {
-      type: DataTypes.STRING(16),
+    created_at: {
+      type: DataTypes.DATE,
       allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updated_at: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
   },
   {
@@ -57,5 +65,8 @@ Efficiency.init(
     timestamps: false,
   }
 );
+
+Efficiency.belongsTo(Employee, { foreignKey: "emp_id" });
+Employee.hasMany(Efficiency, { foreignKey: "emp_id" });
 
 export default Efficiency;

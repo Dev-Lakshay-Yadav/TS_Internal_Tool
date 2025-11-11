@@ -1,11 +1,12 @@
 export interface Efficiency_Attributes {
   id: number;
   emp_id: number;
-  lab: string;
-  case_id: string;
-  units_allocated: string;
-  units_completed: string;
-  month: string;
+  month_year: string;
+  total_units_allocated: number;
+  total_units_completed: number;
+  total_time_spent: number;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export type Efficiency_Creation_Attributes = Omit<Efficiency_Attributes, "id">;

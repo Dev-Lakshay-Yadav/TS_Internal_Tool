@@ -22,7 +22,7 @@ import { generateCasePDF } from "./ts_case_details_pdf.js";
 import { processRedesigns } from "./ts_portal_redesigns_downloader.js";
 import { getClient } from "../../config/box.js";
 import path from "path";
-import { getLiveCases2 } from "../watchLogic.js";
+import { getPatientFolders } from "../watchLogic.js";
 
 // -------------------- Interfaces --------------------
 
@@ -236,20 +236,19 @@ export function processCaseImpl(
 
             const token = caseId.slice(0, 2);
 
-              // console.log(`${process.env.ROOT_FOLDER}/${formatted}/${token}/EXPORT - External/${caseId}`)
-
-            const data = getLiveCases2(
+            const patientNames = getPatientFolders(
               `${process.env.ROOT_FOLDER}/${formatted}/${token}/EXPORT - External/${caseId}`
             );
-            console.log(data,' #@#@#@#@#@#@#          asd                  @#@#@#@#@#@#@#@#')
+            console.log(patientNames,'#@#@#@#@#@#@#          asd                  @#@#@#@#@#@#@#@#')
 
             // send API update (re-added from old function)
             const toLog = {
               case_id: caseId,
-              DateFolder: formatted,
+              dateFolder: formatted,
               case_file: "Unzipping paused",
               queue_status: "Needs prep work",
               current_allocation: "None",
+              patientNames: patientNames,
               case_units: [],
             };
             console.log(`Intentionally not unzipping ${caseId}`);

@@ -222,9 +222,9 @@ export const getRedesignCases = (basePath: string) => {
 
 
 
-const LIVE_REGEX2 = /^(.+?)\s*--\s*(.+)$/;
+const PATIENTFOLDERS_REGEX = /^(.+?)\s*--\s*(.+)$/;
 
-export const getLiveCases2 = (basePath: string) => {
+export const getPatientFolders = (basePath: string) => {
   if (!fs.existsSync(basePath)) {
     throw new Error(`Base path not found: ${basePath}`);
   }
@@ -236,7 +236,7 @@ export const getLiveCases2 = (basePath: string) => {
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
 
-    const match = entry.name.match(LIVE_REGEX2);
+    const match = entry.name.match(PATIENTFOLDERS_REGEX);
     if (!match) continue;
 
     const [, , patientName] = match;
