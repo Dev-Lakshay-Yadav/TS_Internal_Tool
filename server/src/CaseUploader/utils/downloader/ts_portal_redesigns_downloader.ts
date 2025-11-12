@@ -13,6 +13,8 @@ import {
 import { generateCasePDF, generateCommentsPDF } from "./ts_case_details_pdf.js";
 
 import { getClient } from "../../config/box.js";
+import { getCreationTimeDateString } from "./ts_datetime.js";
+import { getPatientFolders } from "../watchLogic.js";
 
 // ---- Types ----
 interface CaseDetails {
@@ -111,6 +113,9 @@ export function processRedesigns(): void {
           `✅ Completed redesign processing for ${caseDetails.case_id}`
         );
 
+        const timestamp = Date.now();
+        const formatted = getCreationTimeDateString(timestamp);
+
         // --- Update redesign status ---
         axios
           .post(
@@ -119,6 +124,7 @@ export function processRedesigns(): void {
               case_id: caseDetails.case_id.split(" -- ")[0],
               status: "downloaded",
               redesign_attempt: caseDetails?.redesign_attempt,
+              dateFolder: formatted,
             },
             { headers: { "Content-Type": "application/json" } }
           )

@@ -239,7 +239,6 @@ export function processCaseImpl(
             const patientNames = getPatientFolders(
               `${process.env.ROOT_FOLDER}/${formatted}/${token}/EXPORT - External/${caseId}`
             );
-            console.log(patientNames,'#@#@#@#@#@#@#          asd                  @#@#@#@#@#@#@#@#')
 
             // send API update (re-added from old function)
             const toLog = {

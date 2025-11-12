@@ -44,7 +44,7 @@ export const registerUser = createAsyncThunk(
   ) => {
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/api/auth/register`,
+        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/allocation/register`,
         data
       );
       return res.data.data;
@@ -65,7 +65,7 @@ export const loginUser = createAsyncThunk(
   async (data: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/api/auth/login`,
+        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/allocation/login`,
         data
       );
       return res.data;
@@ -84,7 +84,7 @@ export const logoutUser = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await axios.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/api/auth/logout`
+        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/allocation/logout`
       );
       return true;
     } catch (error) {
