@@ -1,4 +1,4 @@
-const AllocationPage = () => {
+const AllocateLive = () => {
   const tableData = [
     {
       sno: 1,
@@ -111,4 +111,4 @@ const AllocationPage = () => {
   );
 };
 
-export default AllocationPage;
+export default AllocateLive;

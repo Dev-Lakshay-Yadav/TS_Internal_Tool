@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { loginUser, resetAuthState } from "../store/auth/authSlice";
-import type { RootState } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { loginUser, resetAuthState } from "../../store/auth/authSlice";
+import type { RootState } from "../../store/store";
 
 const Login = () => {
   const [email, setEmail] = useState("");

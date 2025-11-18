@@ -30,7 +30,7 @@ export interface CaseDetails {
   case_id: string;
   box_folder_id: string;
   creation_time_ms: string;
-  details_json: string; // will be parsed to object
+  details_json: JSON; // will be parsed to object
 }
 
 export interface ParsedCaseDetails {
@@ -180,13 +180,12 @@ export function processCaseImpl(
   resolve: (value?: unknown) => void,
   reject: (reason?: unknown) => void
 ): void {
-  const services = (JSON.parse(caseDetails.details_json) as ParsedCaseDetails)
-    .services;
+  const services = (caseDetails.details_json as any)?.services;
   console.log(
     "processCaseImpl called and caseDetails is : ",
     caseId,
     "and",
-    JSON.parse(caseDetails.details_json)
+    caseDetails.details_json
   );
 
   client.folders
@@ -228,7 +227,7 @@ export function processCaseImpl(
             // generate case PDF
             generateCasePDF(
               caseId,
-              JSON.parse(caseDetails.details_json),
+              caseDetails.details_json as any,
               getFilePath(caseId, "CaseDetails.pdf", "IMPORT")
             );
             const timestamp = Date.now();

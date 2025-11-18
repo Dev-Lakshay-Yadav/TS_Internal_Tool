@@ -1,11 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Allocation from "./pages/AllocationPage";
-import Designers from "./pages/DesignersPage";
-import CaseUploader from "./pages/CaseUploader";
-import Register from "./pages/Register";
+import CaseUploader from "./pages/uploader/CaseUploader";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import AllocateLive from "./pages/allocation/AllocateLive";
+import AllocateRedesign from "./pages/allocation/AllocateRedesign";
+import AllocatedCases from "./pages/allocation/AllocatedCases";
 
 import DashboardLayout from "./components/Allocation-dashboard/layout";
+import Employees from "./pages/management/Employees";
 
 const App = () => {
   return (
@@ -16,8 +18,10 @@ const App = () => {
         <Route path="/register" element={<Register />} />
 
         <Route path="/auth" element={<DashboardLayout />}>
-          <Route path="allocation" element={<Allocation />} />
-          <Route path="designers" element={<Designers />} />
+          <Route path="allocate-live" element={<AllocateLive />} />
+          <Route path="allocate-redesign" element={<AllocateRedesign />} />
+          <Route path="allocated" element={<AllocatedCases />} />
+          <Route path="employees" element={<Employees />} />
         </Route>
         <Route path="/upload" element={<CaseUploader />} />
         {/* 404 fallback */}

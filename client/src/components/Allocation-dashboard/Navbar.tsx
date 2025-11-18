@@ -13,9 +13,10 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { label: "Allocation Dashboard", path: "/auth/allocation" },
-    { label: "Design Dashboard", path: "/auth/design-dashboard" },
-    { label: "Employee Dashbaord", path: "/auth/employee-dashboard" },
+    { label: "Live Cases", path: "/auth/allocate-live" },
+    { label: "Redesigns", path: "/auth/allocate-redesign" },
+    { label: "Allocated", path: "/auth/allocated" },
+    { label: "Employees", path: "/auth/employees" },
   ];
 
   return (

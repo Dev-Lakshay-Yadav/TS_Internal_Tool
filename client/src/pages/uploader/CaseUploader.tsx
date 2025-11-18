@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from "react";
-import LiveCaseTable from "../components/CaseUploader/LiveCaseTable";
-import RedesignTable from "../components/CaseUploader/RedesignTable";
+import LiveCaseTable from "../../components/CaseUploader/LiveCaseTable";
+import RedesignTable from "../../components/CaseUploader/RedesignTable";
 import type {
   LiveCaseItem,
   PasskeyItem,
   RedesignItem,
-} from "../types/caseTypes";
+} from "../../types/caseTypes";
 
 type CaseItem = LiveCaseItem | RedesignItem;
 type DateMap = Record<string, Record<string, CaseItem[]>>;

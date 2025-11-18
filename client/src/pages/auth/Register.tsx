@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../store/hooks"; // adjust import path
-import { registerUser, resetAuthState } from "../store/auth/authSlice"; // adjust path to your slice
-import type { RootState } from "../store/store"; // adjust path if needed
+import { useAppDispatch, useAppSelector } from "../../store/hooks"; // adjust import path
+import { registerUser, resetAuthState } from "../../store/auth/authSlice"; // adjust path to your slice
+import type { RootState } from "../../store/store"; // adjust path if needed
 
 const Register = () => {
   const [form, setForm] = useState({

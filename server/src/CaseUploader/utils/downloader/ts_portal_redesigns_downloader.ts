@@ -2,6 +2,11 @@ import axios from "axios";
 import fs from "fs";
 import path from "path";
 
+interface CaseDetailsJson {
+  services?: any[];
+  [key: string]: any;
+}
+
 import {
   INCOMING_REDESIGNS_QUERY,
   UPDATE_REDESIGN_STATUS_ENDPOINT,
@@ -23,7 +28,7 @@ interface CaseDetails {
   creation_time_ms: number;
   redesign_attempt: number;
   box_folder_id: string;
-  details_json: string;
+  details_json: JSON;
   case_activities: string;
   casePriority?: string;
   clientUploads?: string;
@@ -85,7 +90,7 @@ export function processRedesigns(): void {
         );
 
         // --- Generate PDFs ---
-        const detailsJson = JSON.parse(caseDetails.details_json);
+        const detailsJson = caseDetails.details_json as any;
         detailsJson.casePriority = `[REDESIGN PRIORITY] ${priority}`;
 
         try {
